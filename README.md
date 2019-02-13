@@ -124,6 +124,7 @@ p2物理引擎是egret推荐的物理游戏引擎，但是给出示例极其不�
 * Shape是所有Shape拓展的基类
 * 常见的Shape拓展包括：圆形Circle、平面Plane、矩形Box、多边形Convex、粒子Particle、线段Line、胶囊Capsule、海拔形状HightField、射线Ray等
 * Shape基类的属性包括：
+```
   -- position：形状相对于本地坐标中心的偏移量，这个偏移量会影响刚体的重心
   -- angle：形状在刚体本地坐标系统中倾斜的角度
   -- collisionGroup：碰撞分组，与collisionMask一起使用，限制当前形状只与指定条件的形状发生碰撞
@@ -133,7 +134,7 @@ p2物理引擎是egret推荐的物理游戏引擎，但是给出示例极其不�
   -- type：为刚体类型，取值范围是Shape. CIRCLE和Shape.BOX等常量之一，不需要设置该参数，系统会自动设置。 
   -- material：为材质，是一个Material对象，用来设置形状发生碰撞时表现出的响应特性，如摩擦力、弹性系数等 
 实际上，Material类中并不包含摩擦力、弹性系数等属性，它只是一个标志类，只是一个id，真正实现碰撞响应特性的是ContactMaterial类。ContactMaterial类用来为添加了merialA和merialB标识的两个形状设置独特的碰撞响应
-
+```
 
 ## 碰撞：
 * 复杂性存在于碰撞的处理中，而处理碰撞首先要检测到碰撞。碰撞检测最基本的方法就是两两刚体测试看其是否碰撞，这是不能满足效率要求的，因为每个刚体可能形状很复杂。为了进行快速碰撞检测，一般使用包围盒（Bounding Box，如AABB：Axis-Aligned Bounding Box、OBB：Oriented Bounding Box）技术，包围盒是一种简单几何体（长方体或球），刚体完全被其包含在里边。
@@ -141,10 +142,12 @@ p2物理引擎是egret推荐的物理游戏引擎，但是给出示例极其不�
 * broadphase：粗测阶段：两两刚体，测试其包围盒是否重叠（即包围盒的碰撞检测，因为包围盒是一种简单几何体，存在快速算法处理包围盒的碰撞检测）
 * narrowphase：精测阶段：对于broadphase检测出的刚体对，再次进行刚体碰撞检测。任务为二：一是检测刚体之间是否碰撞；二手如果碰撞，计算出接触点（contact point）。
 * 碰撞——碰撞检测的4个阶段：
+```
   -- postBroadphase：AABB开始发生重叠，但形状并没有发生接触 
   -- beginContact：刚体形状开始发生重叠，刚体继续保持原有速度移动 
   -- preSolve：刚体形状发生了重叠，但P2还未进行碰撞处理 
   -- endContact：P2已经完成了碰撞处理，并为碰撞刚体重新分配了速度，同时刚体形状分离，不再有重叠 
+```
 * 碰撞——overlaps：检测当前刚体与指定刚体是否有重叠，并返回检测结果。只有当刚体不进行碰撞模拟时才需要使用overlaps，因为P2在实施碰撞检测和模拟时已经完成了这些内容。比如在界面中放置一个物体，当此位置已经存在物体时不能放置
 * 碰撞——collisionGroup和collisionMask：可以组合过滤掉不用参与碰撞的组合
 * 碰撞——disableBodyCollision：取消两个刚体之间的碰撞行为
@@ -168,13 +171,14 @@ world.addContactMaterial(iceSteelContactMaterial)
 ## Constraint（约束）：
 * 所有约束的基类
 * 常见的约束包括：
+```
   -- 接触约束ContactConstraint：这是一个特别的约束，作用在于防止刚体之间的渗透重叠，并且它可以模拟摩擦和弹性。你无须创建这个约束，系统会自动创建它的。
   -- 距离关节DistanceConstraint：按照指定的距离distance将两个刚体约束在一起，其中任何一个刚体的位置发生变化，会牵着另一个刚体运动，以保证两者的间距为distance。但是两个刚体的角度不受约束，可以绕着节点旋转。
   -- 齿轮关节GearConstraint：按照指定的比例ratio，将两个刚体的角度angleA和angleB约束为angle=angleB## ratio。其中任何一个刚体的角度变换，都会牵着另一个刚体的角度变化，以确保两个刚体角度的比例为ratio。刚体的坐标位置不受约束，可以自由向任意方向移动。
   -- 锁定关节LockConstraint：将两个刚体绑定在一起，使其相对坐标位置、角度差保存不变，仿佛被钉在一起。此关节中的任何刚体坐标或角度发生变化，都会牵着另一个刚体的坐标和角度变化，以确保两个刚体相对坐标和角度分别为localOffsetB和localAngleB。
   -- 位移关节PrismaticConstraint：将刚体bodyB的运动方向，限定为在刚体bodyA本地坐标系统中的一个指定向量。
   -- 旋转关节RevoluteConstraint：限制两个刚体只能绕指定的控制点旋转，该控制点是刚体bodyA本地坐标系下的坐标。其中一个刚体的位置或角度发生变化时，为了确保控制点和刚体的相对位置不变，另一个刚体也会被牵制发生位置和角度的变化。旋转关节常用于模拟小车运动。
-
+```
 
 ## Spring（弹簧）:
 * 属于约束的一种
