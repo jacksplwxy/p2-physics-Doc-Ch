@@ -69,9 +69,9 @@
 * adjustCenterOfMass：调整重心位置。刚体中增加或移去形状后，重心并不会自动改变，可以使用adjustCenterOf Mass()方法，使刚体重心重新回到中心位置。这个方法不带任何参数，也没有返回值。 
 * applyDamping：使用阻尼
 * applyForce：作用力可以让刚体状态改变，通过applyForce()方法，可以在指定点worldPoint对刚体施加一个作用力，形成一个加速度或扭力，改变刚体的线速度或角速度。构造函数为：function applyForce(force:number[], worldPoint:number[]) 其中，force是要施加的作用力，这是一个二维向量； worldPoint是一个全局坐标点，表示force在刚体上的作用点，当此点不在刚体重心位置时，刚体角度也会发生变换。 
-* applyForceLocal：
+* applyForceLocal：给刚体施加一个力，刚体会作加速度运动
 * applyImpulse：如果要瞬间改变刚体的状态，如子弹弹出膛效果，需要使用applyImpulse()对其施加冲量，使刚体的速度和角速度瞬间发生变化。 function applyImpulse(impulse:number[], relativePoint:number[]) 其中，impulse为要施加的冲量，冲量有大小和方向，是一个二维向量； relativePoint是一个本地坐标点，表示冲量的作用点，当作用点不在刚体中心时刚体角度也会发生变化。 
-* applyImpulseLocal：
+* applyImpulseLocal：给刚体施加一个冲量，刚体会作匀速运动
 * emit、on、off、has：分别实现派发、监听、取消监听，以及检测是否包含指定事件功能。
 * fromPolygon：fromPolygon用于将多边形分解成一个个小的形状，然后组合成完整的多边形。 function fromPolygon(path:number[][], [options]):boolean 其中，path保存了多边形顶点数组，options为可选属性，定义多边形分解的相关设置。
 * getAABB：获取刚体的最小包围盒AABB(Axis Align Bounding Box)，最小包围盒AABB是指包围形状的最小矩形框。可以通过设置刚体的isDrawAABB=true，以显示出刚体的AABB。AABB对象将矩形对象的左下角和右下角坐标分别保存在属性lowerBound和upperBound中。 
